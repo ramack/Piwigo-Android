@@ -38,6 +38,6 @@ public class AboutViewModel extends ViewModel {
         String versionName = BuildConfig.VERSION_NAME;
 
         String mergedAboutText = resources.getString(R.string.about_text, appName, versionName);
-        return Html.fromHtml(mergedAboutText);
+        return Html.fromHtml(mergedAboutText, Html.FROM_HTML_MODE_COMPACT );
     }
 }
