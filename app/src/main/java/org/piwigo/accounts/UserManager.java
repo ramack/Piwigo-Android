@@ -107,6 +107,10 @@ public class UserManager {
         return accountManager.getUserData(account, KEY_TOKEN);
     }
 
+    public boolean isGuest(Account account){
+        return Boolean.parseBoolean(accountManager.getUserData(account, KEY_IS_GUEST));
+    }
+
     private String getAccountName(String siteUrl, String username) {
         Uri uri = Uri.parse(siteUrl);
         String sitename = uri.getHost() + uri.getPath();

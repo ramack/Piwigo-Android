@@ -4,9 +4,11 @@
     <dimen name="login_logo_margin_bottom">0dp</dimen>
 
     <!-- Height of the header view of the navigation drawer -->
-    <dimen name="nav_header_size">200dp</dimen>
+    <dimen name="nav_header_size">180dp</dimen>
     <!-- Content padding in nav header -->
     <dimen name="nav_header_padding">16dp</dimen>
     <!-- Username text size in nav header -->
     <dimen name="nav_header_user_text_size">18sp</dimen>
+    <dimen name="nav_header_url_text_size">12sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
