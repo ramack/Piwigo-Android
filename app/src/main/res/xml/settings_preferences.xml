@@ -6,12 +6,11 @@
     <PreferenceCategory
         android:title="@string/settings_albums_title"
         app:iconSpaceReserved="false">
-        <ListPreference
-            android:entries="@array/photos_per_row_values"
-            android:entryValues="@array/photos_per_row_values"
-            android:inputType="number"
+        <SeekBarPreference
             android:key="photos_per_row"
-            app:defaultValue="3"
+            android:max="7"
+            android:min="1"
+            android:defaultValue="3"
             app:iconSpaceReserved="false"
             app:summary="@string/settings_photos_per_row_summary"
             app:title="@string/settings_photos_per_row" />

@@ -27,8 +27,11 @@ import javax.inject.Inject;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 import androidx.preference.ListPreference;
+import androidx.preference.SeekBarPreference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import dagger.android.AndroidInjection;
 
 
@@ -38,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
     PreferencesRepository preferences;
 
     private ListPreference mPreferenceThumbnailSize;
-    private ListPreference mPreferencePhotosPerRow;
+    private SeekBarPreference mPreferencePhotosPerRow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,27 +52,24 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         ActionBar bar = getSupportActionBar();
         if (bar != null) bar.setDisplayHomeAsUpEnabled(true);
+        PreferenceFragmentCompat sf = new SettingsFragment();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.settings_container, new SettingsFragment())
-                .commit();
+                .replace(R.id.settings_container, sf)
+                .commitNow();
 
+        mPreferenceThumbnailSize = sf.getPreferenceManager().findPreference(PreferencesRepository.KEY_PREF_DOWNLOAD_SIZE);
+        mPreferencePhotosPerRow = sf.getPreferenceManager().findPreference(PreferencesRepository.KEY_PREF_PHOTOS_PER_ROW);
 
-        mPreferenceThumbnailSize = new ListPreference(getApplicationContext());
-        mPreferencePhotosPerRow = new ListPreference(getApplicationContext());
-
-        mPreferenceThumbnailSize.setKey(PreferencesRepository.KEY_PREF_DOWNLOAD_SIZE);
-        mPreferencePhotosPerRow.setKey(PreferencesRepository.KEY_PREF_PHOTOS_PER_ROW);
-
-        String photosPerRowValue = getString(R.string.settings_photos_per_row_summary, preferences.getString(PreferencesRepository.KEY_PREF_PHOTOS_PER_ROW));
+        String photosPerRowValue = getString(R.string.settings_photos_per_row_summary, preferences.getInt(PreferencesRepository.KEY_PREF_PHOTOS_PER_ROW));
         String thumbnailSizeValue = getString(R.string.settings_download_size_summary, preferences.getString(PreferencesRepository.KEY_PREF_DOWNLOAD_SIZE));
 
         mPreferenceThumbnailSize.setSummary(thumbnailSizeValue);
         mPreferencePhotosPerRow.setSummary(photosPerRowValue);
 
         mPreferencePhotosPerRow.setOnPreferenceChangeListener((preference, value) -> {
-            mPreferencePhotosPerRow.setSummary(getString(R.string.settings_photos_per_row_summary, value.toString()));
+            mPreferencePhotosPerRow.setSummary(getString(R.string.settings_photos_per_row_summary, value));
             return true;
         });
 
